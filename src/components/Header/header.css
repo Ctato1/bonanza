@@ -1,0 +1,8 @@
+.restaurant-image{
+    width: 100%;
+    height: 500px;
+    object-fit: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}

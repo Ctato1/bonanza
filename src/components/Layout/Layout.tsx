@@ -1,10 +1,8 @@
-import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import Routers from "../../routers/Routers";
 const Layout = () => {
   return (
     <>
-      <Header />
       <div>
         <Routers></Routers>
       </div>
