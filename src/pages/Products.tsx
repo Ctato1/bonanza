@@ -1,53 +1,44 @@
 import "../styles/products.css";
-
 import Header from "../components/Header/Header";
 import CategoryCard from "../components/UI/CategoryCard/CategoryCard";
-import products from "../assets/data/products";
 import categories from "../assets/data/categories";
 import { useEffect, useState } from "react";
+import { motion, useAnimation } from "framer-motion";
 
-
-
-interface productProp {
-  id: string;
-  category: string;
-  productName: string;
-  geoName: string;
-  imgUrl: string;
-  price: number;
-  shortDesc: string;
-  description: string;
-}
-
-interface categoryProp {
-    name:string,
-    imageUrl:string,
+interface CategoryProp {
+  name: string;
+  imageUrl: string;
 }
 
 const Products = () => {
-    const [category, setCategory] = useState(categories);
-    console.log(category);
-    
-    // const [categories, setCategories] = useState<string[]>([]);
+  const [category] = useState<CategoryProp[]>(categories); // No need for setCategory if you're not modifying state
+  const controls = useAnimation();
+  const [lastScrollTop, setLastScrollTop] = useState(0);
 
-    // useEffect(() => {
-    //   const uniqueCategories = Array.from(new Set(products.map((product:productProp) => product.category)));
-    //   console.log(uniqueCategories);
-      
-    //   setCategories(uniqueCategories);
-    // }, [products]);
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      controls.start({ y: scrollTop > lastScrollTop ? -200 : 0 });
+      setLastScrollTop(scrollTop <= 0 ? 0 : scrollTop);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [lastScrollTop, controls]);
 
   return (
-    <div>
+    <div className="wraper-products">
       <Header />
-      Products
-      <div className="category-container">
-        {
-            category.map((item:categoryProp,index:number)=>(
-                <CategoryCard name={item.name} imageUrl={item.imageUrl} key={index}/>
-            ))
-        }
-      </div>
+      <motion.div
+        className="category-container"
+        animate={controls}
+        initial={{ y: 0 }}
+        transition={{ type: "tween", duration: 0.9 }}
+      >
+        {category.map((item, index) => (
+          <CategoryCard name={item.name} imageUrl={item.imageUrl} key={index} />
+        ))}
+      </motion.div>
     </div>
   );
 };

@@ -1,5 +1,14 @@
-.category-container{
-    width: 100%;
-    height:fit-content;
-    background: #fff;
+.wraper-products {
+    height: 100svh;
+}
+
+.category-container {
+  padding: 10px;
+  width: 100%;
+  background-image: url("https://t3.ftcdn.net/jpg/03/32/24/92/360_F_332249282_aicKD4ZlPqVTg2PvbZtDGP5RTzU6cXj3.jpg");
+  background-size: cover; /* Ensures the image covers the entire container */
+  background-position: center;
+  border-radius: 10px 10px 0 0;
+  box-sizing: border-box; /* Ensures padding is included in width/height calculations */
+  margin-top: -7px;
 }
